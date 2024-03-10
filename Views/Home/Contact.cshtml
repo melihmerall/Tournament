@@ -1,0 +1,371 @@
+﻿@using Tournament.Data.Entities
+@model TeamApplicationForm
+
+@{
+    ViewData["Title"] = "Contact";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- jQuery Validation -->
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<style>
+    .flex-container {
+        display: flex;
+        align-items: center; /* Dikeyde ortala */
+        justify-content: center; /* Yatayda ortala */
+        height: 100vh; /* Sayfa yüksekliği kadar genişlik */
+    }
+
+    /* Diğer stiller buraya eklenebilir */
+</style>
+<style>
+    /* Takım üyeleri alanı düzenlemeleri */
+    /* Takım üyeleri alanı düzenlemeleri */
+    #teamMembersContainer {
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row; /* Yatay düzenleme */
+        justify-content: space-between; /* Satırlar arasında boşluk bırak */
+    }
+
+        #teamMembersContainer > div {
+            width: calc(25% - 10px); /* Her öğe için genişlik (4 öğe bir satırda) */
+            margin-bottom: 10px; /* Yeni satıra geçmek için boşluk */
+        }
+
+    #memberTable {
+        margin-top: 20px;
+        width: 100%;
+        border-collapse: collapse;
+        display: flex;
+        flex-direction: column; /* Yatay düzenleme */
+    }
+
+        #memberTable th,
+        #memberTable td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        #memberTable th {
+            background-color: #f2f2f2;
+        }
+
+</style>
+
+<div class="page-heading">
+    <div class="container">
+        <div class="row">
+
+            <section class="contact-us-form">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 offset-lg-3">
+                            <div class="section-heading">
+                                <h1>Takım Üyeliği</h1>
+                                <h4></h4>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <form id="contact" asp-action="Contact" asp-controller="Home" method="post" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div asp-validation-summary="All" class="text-danger"></div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <fieldset>
+                                            <label for="teamname">Takım Adı</label>
+                                            <input type="text" asp-for="Teamname" id="teamname" placeholder="Takım Adı">
+                                            <span asp-validation-for="Teamname" class="text-danger"></span>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <fieldset>
+                                            <label for="company">Kurum Adı</label>
+                                            <input type="text" asp-for="Company" id="company" placeholder="Kurum Adı">
+                                            <span asp-validation-for="Company" class="text-danger"></span>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <fieldset>
+                                            <label for="email">E-Posta</label>
+                                            <input type="email" asp-for="Email" id="email" placeholder="E-Posta">
+                                            <span asp-validation-for="Email" class="text-danger"></span>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="company">Kurum Evrağı</label>
+                                        <input type="file" name="file" id="file" class="form-control">
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="company">İrtibat Numarası:</label>
+                                        <input asp-for="PhoneNumber" type="text" id="phoneNumberInput" placeholder="(530)-000-16-61" onblur="validatePhoneNumber(this)" oninput="formatPhoneNumber(this)">
+                                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <h3>Takım Üyeleri</h3>
+                                    </div>
+                                    <div class="col-lg-12" style="display:flex; justify-content: center; ">
+                                        <div class="col-lg-3">
+                                            <label for="teamSize">Takım Boyutu:</label>
+                                            <select asp-for="TeamSize" id="teamSize" onchange="addTeamMembers()" class="form-select">
+                                                <option value="0">Seçiniz</option>
+                                                <option value="10">10</option>
+                                                <option value="11">11</option>
+                                                <option value="12">12</option>
+                                                <option value="13">13</option>
+
+                                            </select>
+                                            <span asp-validation-for="TeamSize" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div id="teamMembersContainer" class="col-lg-12">
+                                        <!-- Takım üye bilgileri buraya eklenecek -->
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <label for="disclaimer">Maç Kuralları, Turnuva Kuralları, Disiplin Kurallarını Kabul Ediyorum.</label>
+                                        <input required checked type="checkbox" asp-for="Disclaimer" id="disclaimer">
+                                        <span asp-validation-for="Disclaimer" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <button type="submit" id="form-submit" class="orange-button">BAŞVURU YAP</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+
+<section class="partners">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-2 col-sm-4 col-6">
+                <div class="item">
+                    <img src="assets/images/client-01.png" alt="">
+                </div>
+            </div>
+            <div class="col-lg-2 col-sm-4 col-6">
+                <div class="item">
+                    <img src="assets/images/client-01.png" alt="">
+                </div>
+            </div>
+            <div class="col-lg-2 col-sm-4 col-6">
+                <div class="item">
+                    <img src="assets/images/client-01.png" alt="">
+                </div>
+            </div>
+            <div class="col-lg-2 col-sm-4 col-6">
+                <div class="item">
+                    <img src="assets/images/client-01.png" alt="">
+                </div>
+            </div>
+            <div class="col-lg-2 col-sm-4 col-6">
+                <div class="item">
+                    <img src="assets/images/client-01.png" alt="">
+                </div>
+            </div>
+            <div class="col-lg-2 col-sm-4 col-6">
+                <div class="item">
+                    <img src="assets/images/client-01.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+
+    function formatPhoneNumber(input) {
+        // Girilen değerden sadece rakamları al
+        var phoneNumber = input.value.replace(/\D/g, '');
+
+        // İlk rakam 0 ise, onu kaldır
+        if (phoneNumber.charAt(0) === '0') {
+            phoneNumber = phoneNumber.substring(1);
+        }
+
+        // Telefon numarasını istediğiniz formata dönüştür
+        var formattedPhoneNumber = '(' + phoneNumber.substring(0, 3) + ')-' +
+            phoneNumber.substring(3, 6) + '-' +
+            phoneNumber.substring(6, 8) + '-' +
+            phoneNumber.substring(8, 10);
+
+        // Input alanına formatlı telefon numarasını yaz
+        input.value = formattedPhoneNumber;
+        return formattedPhoneNumber;
+
+    }
+    function validatePhoneNumber(input) {
+        // Girilen değerden sadece rakamları al
+        var phoneNumber = input.value.replace(/\D/g, '');
+
+        // Telefon numarasını kontrol et
+        var phoneNumberRegex = /^(\d{10})$/;
+        var isValidPhoneNumber = phoneNumberRegex.test(phoneNumber);
+
+        // Geçerli değilse, hata mesajını göster
+        if (!isValidPhoneNumber) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Doğrulama Hatası!',
+                text: "Doğru telefon numarası giriniz.",
+                event: 'Tamam'
+            });
+        }
+    }
+    function addTeamMembers() {
+        var teamSize = document.getElementById("teamSize").value;
+        var teamMembersContainer = document.getElementById("teamMembersContainer");
+
+        // Önce mevcut içeriği temizle
+        teamMembersContainer.innerHTML = "";
+
+        // Seçilen sayı kadar takım üyesi bilgi ekleyin
+        for (var i = 0; i < teamSize; i++) {
+            var label = document.createElement("label");
+            label.textContent = "Oyuncu Bilgisi";
+
+            var br = document.createElement("br");
+
+
+            var memberDiv = document.createElement("div");
+            memberDiv.className = "col-md-3";
+
+            var inputTC = document.createElement("input");
+            inputTC.type = "text";
+            inputTC.id = "tc" + (i + 1);
+            inputTC.name = "teamMembers[" + i + "].tc";
+            inputTC.placeholder = "TC Kimlik Numarası";
+
+            var inputName = document.createElement("input");
+            inputName.type = "text";
+            inputName.id = "name" + (i + 1);
+            inputName.name = "teamMembers[" + i + "].name";
+            inputName.placeholder = "İsim";
+
+            var inputSurname = document.createElement("input");
+            inputSurname.type = "text";
+            inputSurname.id = "surname" + (i + 1);
+            inputSurname.name = "teamMembers[" + i + "].surname";
+            inputSurname.placeholder = "Soyisim";
+
+            var inputIletisim = document.createElement("input");
+            inputIletisim.type = "text";
+            inputIletisim.id = "iletisim" + (i + 1);
+            inputIletisim.name = "teamMembers[" + i + "].iletisim";
+            inputIletisim.placeholder = "(530)-000-16-61 - Telefon Numarası";
+            inputIletisim.addEventListener("input", function () {
+                formatPhoneNumber(this);
+                validatePhoneNumber(this);
+            });
+
+            var inputIsCaptain = document.createElement("input");
+            inputIsCaptain.type = "checkbox";
+            inputIsCaptain.id = "captain" + (i + 1);
+            inputIsCaptain.name = "teamMembers[" + i + "].captain";
+
+            var isCaptainLabel = document.createElement("label");
+            isCaptainLabel.htmlFor = "captain" + (i + 1);
+            isCaptainLabel.innerText = "Yönetici/Kaptan";
+            inputIsCaptain.addEventListener("change", function () {
+                handleCaptainChange(this);
+            });
+            memberDiv.appendChild(label);
+            memberDiv.appendChild(br);
+            memberDiv.appendChild(inputTC);
+            memberDiv.appendChild(inputName);
+            memberDiv.appendChild(inputSurname);
+            memberDiv.appendChild(inputIletisim);
+            memberDiv.appendChild(inputIsCaptain);
+            memberDiv.appendChild(isCaptainLabel);
+
+            var hr = document.createElement("hr");
+            memberDiv.appendChild(hr);
+            teamMembersContainer.appendChild(memberDiv);
+        }
+
+    }
+    function handleCaptainChange(checkbox) {
+        var label = checkbox.nextElementSibling;
+        label.style.color = checkbox.checked ? "green" : "black"; // Örnek: seçildiğinde yeşil, seçilmediğinde siyah renk
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Form başarıyla gönderildiğinde çalışacak kod
+        var form = document.getElementById("contact");
+        form.addEventListener("submit", function (event) {
+            event.preventDefault(); // Sayfa yenilemesini engelle
+
+            // Formun asenkron bir şekilde gönderilmesi (AJAX)
+            fetch(form.action, {
+                method: form.method,
+                body: new FormData(form)
+            })
+                .then(response => response.json()) // Yanıtı JSON olarak al
+                .then(data => {
+                    if (data.success) {
+                        // Başarı durumunda SweetAlert2 ile bildirim göster
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Başvuru Başarılı!',
+                            text: 'Başvurunuz alınmıştır. Teşekkür ederiz!',
+                            event: 'Tamam'
+                        });
+                        setTimeout(function () {
+                            location.reload();
+                        }, 3000);
+                    } else {
+                        // Hata durumunda SweetAlert2 ile bildirim göster
+                        if (data.errors) {
+                            // Model doğrulama hataları varsa
+                            var errorList = '<ul>';
+                            data.errors.forEach(function (error) {
+                                errorList += '<li>' + error + '</li>';
+                            });
+                            errorList += '</ul>';
+
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Doğrulama Hatası!',
+                                html: errorList,
+                                event: 'Tamam'
+                            });
+                        } else {
+                            // Diğer hatalar
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Başvuru Hatası!',
+                                text: data.message,
+                                event: 'Tamam'
+                            });
+                        }
+                    }
+                })
+                .catch(error => {
+                    // Hata durumunda SweetAlert2 ile bildirim göster
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Başvuru Hatası!',
+                        text: data.message
+                    });
+
+                });
+
+        });
+
+    });
+
+</script>
