@@ -72,6 +72,8 @@ namespace Tournament.Controllers
                 return Json(errorResult);
             }
 
+
+
             // Diðer iþlemler
             try
             {
@@ -98,6 +100,38 @@ namespace Tournament.Controllers
                     fileDownloadLink = $"https://maraskamuturnuva.com/uploads/{fileDoc.FileName}";
                     fileId = fileDoc.Id;
                 }
+                var teamApplicationForm = new TeamApplicationForm()
+                {
+                    Company = form.Company,
+                    Teamname = form.Teamname,
+                    TeamSize = form.TeamSize,
+                    Email = form.Email,
+                    Disclaimer = form.Disclaimer,
+                    FileId = fileId,
+                    PhoneNumber = phoneNumber,
+                };
+
+                _applicationContext.TeamApplicationForms.Add(teamApplicationForm);
+                _applicationContext.SaveChanges();
+
+
+
+
+                foreach (var i in form.TeamMembers)
+                {
+                    i.TeamApplicationFormId = teamApplicationForm.Id;
+                    i.isCaptain = i.Captain == "on";
+                    if (i.Iletisim != null)
+                    {
+                        i.Iletisim = regex.Replace(i.Iletisim, "");
+                        i.Iletisim = "+90" + i.Iletisim;
+                    }
+
+
+                }
+
+                _applicationContext.TeamMembers.AddRange(form.TeamMembers);
+                _applicationContext.SaveChanges();
                 string emailBody = $@"<!DOCTYPE html>
 <html lang=""tr"">
 <head>
@@ -172,10 +206,10 @@ namespace Tournament.Controllers
                 {
                     emailBody += $@"
                 <tr>
-                    <td>{teamMember.Name}</td>
-                    <td>{teamMember.Surname}</td>
-                    <td>{teamMember.Iletisim}</td>
-                    <td>{teamMember.TC}</td>
+                    <td>{teamMember?.Name}</td>
+                    <td>{teamMember?.Surname}</td>
+                    <td>{teamMember?.Iletisim}</td>
+                    <td>{teamMember?.TC}</td>
                     <td>{((bool)teamMember?.isCaptain ? "Evet" : "Hayýr")}</td>
                 </tr>";
                 }
@@ -187,48 +221,8 @@ namespace Tournament.Controllers
     </div>
 </body>
 </html>";
-
                 var sendMail = await _emailService.SendEmailAsync("ahmtblc1986@gmail.com", "Baþvuru Formu", emailBody);
                 var sendMail2 = await _emailService.SendEmailAsync(form.Email, "Baþvuru Formunuz Oluþturuldu", emailBody);
-
-                if (sendMail == true)
-                {
-                    form.isMailSendSuccess = true;
-                }
-                else
-                {
-                    form.isMailSendSuccess = false;
-                }
-                var teamApplicationForm = new TeamApplicationForm()
-                {
-                    Company = form.Company,
-                    Teamname = form.Teamname,
-                    TeamSize = form.TeamSize,
-                    Email = form.Email,
-                    Disclaimer = form.Disclaimer,
-                    FileId = fileId,
-                    PhoneNumber = phoneNumber,
-                };
-                _applicationContext.TeamApplicationForms.Add(teamApplicationForm);
-                _applicationContext.SaveChanges();
-
-                foreach (var i in form.TeamMembers)
-                {
-                    i.TeamApplicationFormId = teamApplicationForm.Id;
-                    i.isCaptain = i.Captain == "on";
-                    if (i.Iletisim != null)
-                    {
-                        i.Iletisim = regex.Replace(i.Iletisim, "");
-                        i.Iletisim = "+90" + i.Iletisim;
-                    }
-
-
-                }
-
-                _applicationContext.TeamMembers.AddRange(form.TeamMembers);
-                _applicationContext.SaveChanges();
-
-                
 
                 return Json(new { success = true, message = "Baþvuru baþarýyla alýndý." });
             }

@@ -29,7 +29,7 @@ namespace Tournament.Data.Entities
         public bool Disclaimer { get; set; }
 
         public string? PhoneNumber { get; set; }
-        public bool isMailSendSuccess { get; set; }
+        public bool isMailSendSuccess { get; set; } = true;
     }
 
     public class TeamMember : BaseEntity
