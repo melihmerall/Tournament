@@ -35,18 +35,21 @@ namespace Tournament.Controllers
         {
             return View();
         }
+
         [Route("/iletisim")]
         [HttpGet]
         public IActionResult Contact()
         {
             return View();
         }
+
         [HttpPost]
         [Route("/iletisim")]
         public async Task<IActionResult> Contact([FromForm] TeamApplicationForm form, [Required(ErrorMessage = "Kurum belgesi zorunludur.")] IFormFile? file)
         {
             Regex regex = new Regex(@"[^\d]");
             var phoneNumber = "";
+            var isMailSuccess = false;
 
             if (form.PhoneNumber != null)
             {
@@ -60,7 +63,7 @@ namespace Tournament.Controllers
             if (!ModelState.IsValid)
             {
                 var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
-                var errorResult = new { success = false, message = "Doðrulama hatasý",errors = errors  };
+                var errorResult = new { success = false, message = "Doðrulama hatasý", errors = errors };
                 return Json(errorResult);
             }
 
@@ -100,39 +103,41 @@ namespace Tournament.Controllers
                     fileDownloadLink = $"https://maraskamuturnuva.com/uploads/{fileDoc.FileName}";
                     fileId = fileDoc.Id;
                 }
-                var teamApplicationForm = new TeamApplicationForm()
+				#region sendMail
+
+                try
                 {
-                    Company = form.Company,
-                    Teamname = form.Teamname,
-                    TeamSize = form.TeamSize,
-                    Email = form.Email,
-                    Disclaimer = form.Disclaimer,
-                    FileId = fileId,
-                    PhoneNumber = phoneNumber,
-                };
-
-                _applicationContext.TeamApplicationForms.Add(teamApplicationForm);
-                _applicationContext.SaveChanges();
-
-
-
-
-                foreach (var i in form.TeamMembers)
-                {
-                    i.TeamApplicationFormId = teamApplicationForm.Id;
-                    i.isCaptain = i.Captain == "on";
-                    if (i.Iletisim != null)
+                    var teamApplicationForm = new TeamApplicationForm()
                     {
-                        i.Iletisim = regex.Replace(i.Iletisim, "");
-                        i.Iletisim = "+90" + i.Iletisim;
+                        Company = form.Company,
+                        Teamname = form.Teamname,
+                        TeamSize = form.TeamSize,
+                        Email = form.Email,
+                        Disclaimer = form.Disclaimer,
+                        FileId = fileId,
+                        PhoneNumber = phoneNumber,
+                        isMailSendSuccess = isMailSuccess
+                    };
+
+                    _applicationContext.TeamApplicationForms.Add(teamApplicationForm);
+                    _applicationContext.SaveChanges();
+
+
+
+
+                    foreach (var i in form.TeamMembers)
+                    {
+                        i.TeamApplicationFormId = teamApplicationForm.Id;
+                        i.isCaptain = i.Captain == "on";
+                        if (i.Iletisim != null)
+                        {
+                            i.Iletisim = regex.Replace(i.Iletisim, "");
+                            i.Iletisim = "+90" + i.Iletisim;
+                        }
+
+
                     }
-
-
-                }
-
-                _applicationContext.TeamMembers.AddRange(form.TeamMembers);
-                _applicationContext.SaveChanges();
-                string emailBody = $@"<!DOCTYPE html>
+                    string emailBody = $@"<!DOCTYPE html>
 <html lang=""tr"">
 <head>
     <meta charset=""UTF-8"">
@@ -202,9 +207,9 @@ namespace Tournament.Controllers
             </thead>
             <tbody>";
 
-                foreach (var teamMember in form.TeamMembers)
-                {
-                    emailBody += $@"
+                    foreach (var teamMember in form.TeamMembers)
+                    {
+                        emailBody += $@"
                 <tr>
                     <td>{teamMember?.Name}</td>
                     <td>{teamMember?.Surname}</td>
@@ -212,23 +217,42 @@ namespace Tournament.Controllers
                     <td>{teamMember?.TC}</td>
                     <td>{((bool)teamMember?.isCaptain ? "Evet" : "Hayýr")}</td>
                 </tr>";
-                }
+                    }
 
-                emailBody += @"
+                    emailBody += @"
             </tbody>
         </table>
        
     </div>
 </body>
 </html>";
-                var sendMail = await _emailService.SendEmailAsync("ahmtblc1986@gmail.com", "Baþvuru Formu", emailBody);
-                var sendMail2 = await _emailService.SendEmailAsync(form.Email, "Baþvuru Formunuz Oluþturuldu", emailBody);
+                    var sendMail = await _emailService.SendEmailAsync("ahmtblc1986@gmail.com", "Baþvuru Formu", emailBody);
+					var sendMail2 = await _emailService.SendEmailAsync(form.Email, "Baþvuru Formunuz Oluþturuldu", emailBody);
+                    isMailSuccess = true;
+					TempData["MailInfo"] = "Mail Gönderme iþlemi baþarýlý.";
 
-                return Json(new { success = true, message = "Baþvuru baþarýyla alýndý." });
-            }
-            catch (Exception ex)
+				}
+				catch (Exception ex)
+                {
+                    TempData["MailInfo"] = ex.Message + "Mail Gönderilirken Hata oluþtu.";
+
+				}
+
+
+				#endregion
+
+
+
+                _applicationContext.TeamMembers.AddRange(form.TeamMembers);
+                _applicationContext.SaveChanges();
+                var mailMessage = TempData["MailInfo"];
+
+                return Json(new { success = true, message = "Baþvuru baþarýyla alýndý. " + mailMessage }) ;
+
+			}
+			catch (Exception ex)
             {
-                var errorResult = new { success = false, message = "Bir hata oluþtu. Lütfen tekrar deneyin.", error = ex.Message };
+                var errorResult = new { success = false, message = "Bir hata oluþtu. Lütfen tekrar deneyin. " + ex.Message, error = ex.Message };
                 return Json(errorResult);
             }
         }

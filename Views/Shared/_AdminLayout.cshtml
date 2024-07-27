@@ -1,0 +1,290 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--favicon-->
+	<link rel="icon" href="~/adminassets/images/favicon-32x32.png" type="image/png" />
+	<!--plugins-->
+	<link href="~/adminassets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
+	<link href="~/adminassets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
+	<link href="~/adminassets/plugins/highcharts/css/highcharts.css" rel="stylesheet" />
+	<link href="~/adminassets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
+	<link href="~/adminassets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
+	<link href="~/adminassets/plugins/datatable/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+
+	<!-- loader-->
+	<!-- Bootstrap CSS -->
+	<link href="~/adminassets/css/bootstrap.min.css" rel="stylesheet">
+	<link href="~/adminassets/css/bootstrap-extended.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+	<link href="~/adminassets/css/app.css" rel="stylesheet">
+	<link href="~/adminassets/css/icons.css" rel="stylesheet">
+	<!-- Theme Style CSS -->
+	<link rel="stylesheet" href="~/adminassets/css/dark-theme.css" />
+	<link rel="stylesheet" href="~/adminassets/css/semi-dark.css" />
+	<link rel="stylesheet" href="~/adminassets/css/header-colors.css" />
+	<title>Hexaops Admin</title>
+</head>
+
+<body>
+	<!--wrapper-->
+	<div class="wrapper">
+		<!--sidebar wrapper -->
+		<div class="sidebar-wrapper" data-simplebar="true">
+			<div class="sidebar-header">
+				<div>
+					<img src="~/adminassets/images/logo-icon.png" class="logo-icon" alt="logo icon">
+				</div>
+				<div>
+					<h4 class="logo-text">Admin</h4>
+				</div>
+				<div class="toggle-icon ms-auto">
+					<i class='bx bx-first-page'></i>
+				</div>
+			</div>
+			<!--navigation-->
+			<ul class="metismenu" id="menu">
+				<li>
+					<a href="javascript:;" class="has-arrow">
+						<div class="parent-icon">
+							<i class='bx bx-home'></i>
+						</div>
+						<div class="menu-title">Yönetim</div>
+					</a>
+					<ul>
+						<li>
+							<a href="/Admin/Submissions"><i class="bx bx-right-arrow-alt"></i>Başvuru Talepleri</a>
+						</li>
+						
+					</ul>
+				</li>
+@* 				<li>
+					<a class="has-arrow" href="javascript:;">
+						<div class="parent-icon">
+							<i class="bx bx-error"></i>
+						</div>
+						<div class="menu-title">Errors</div>
+					</a>
+					<ul>
+						<li>
+							<a href="errors-404-error.html" target="_blank"><i class="bx bx-right-arrow-alt"></i>404 Error</a>
+						</li>
+						<li>
+							<a href="errors-500-error.html" target="_blank"><i class="bx bx-right-arrow-alt"></i>500 Error</a>
+						</li>
+						<li>
+							<a href="errors-coming-soon.html" target="_blank"><i class="bx bx-right-arrow-alt"></i>Coming Soon</a>
+						</li>
+						<li>
+							<a href="error-blank-page.html" target="_blank"><i class="bx bx-right-arrow-alt"></i>Blank Page</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="faq.html">
+						<div class="parent-icon">
+							<i class="bx bx-help-circle"></i>
+						</div>
+						<div class="menu-title">FAQ</div>
+					</a>
+				</li>
+				<li>
+					<a href="pricing-table.html">
+						<div class="parent-icon">
+							<i class='bx bx-dollar-circle'></i>
+						</div>
+						<div class="menu-title">Pricing</div>
+					</a>
+				</li>
+				<li class="menu-label">Charts & Maps</li>
+				<li>
+					<a class="has-arrow" href="javascript:;">
+						<div class="parent-icon">
+							<i class="bx bx-line-chart"></i>
+						</div>
+						<div class="menu-title">Charts</div>
+					</a>
+					<ul>
+						<li>
+							<a href="charts-apex-chart.html"><i class="bx bx-right-arrow-alt"></i>Apex</a>
+						</li>
+						<li>
+							<a href="charts-chartjs.html"><i class="bx bx-right-arrow-alt"></i>Chartjs</a>
+						</li>
+						<li>
+							<a href="charts-highcharts.html"><i class="bx bx-right-arrow-alt"></i>Highcharts</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a class="has-arrow" href="javascript:;">
+						<div class="parent-icon">
+							<i class='bx bx-map-pin'></i>
+						</div>
+						<div class="menu-title">Maps</div>
+					</a>
+					<ul>
+						<li>
+							<a href="map-google-maps.html"><i class="bx bx-right-arrow-alt"></i>Google Maps</a>
+						</li>
+						<li>
+							<a href="map-vector-maps.html"><i class="bx bx-right-arrow-alt"></i>Vector Maps</a>
+						</li>
+					</ul>
+				</li>
+				<li class="menu-label">Others</li>
+				<li>
+					<a class="has-arrow" href="javascript:;">
+						<div class="parent-icon">
+							<i class="bx bx-menu"></i>
+						</div>
+						<div class="menu-title">Menu Levels</div>
+					</a>
+					<ul>
+						<li>
+							<a class="has-arrow" href="javascript:;"><i class="bx bx-right-arrow-alt"></i>Level One</a>
+							<ul>
+								<li>
+									<a class="has-arrow" href="javascript:;"><i class="bx bx-right-arrow-alt"></i>Level Two</a>
+									<ul>
+										<li>
+											<a href="javascript:;"><i class="bx bx-right-arrow-alt"></i>Level Three</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="https://codervent.com/synadmin/documentation/index.html" target="_blank">
+						<div class="parent-icon">
+							<i class='bx bx-file'></i>
+						</div>
+						<div class="menu-title">Documentation</div>
+					</a>
+				</li> *@
+			</ul>
+			<!--end navigation-->
+		</div>
+		<!--end sidebar wrapper -->
+		<!--start header -->
+		<header>
+			<div class="topbar d-flex align-items-center dash-header">
+				<nav class="navbar navbar-expand gap-3">
+					<div class="mobile-toggle-menu">
+						<i class='bx bx-menu'></i>
+					</div>
+					
+					<div class="search-bar flex-grow-1">
+						<div class="position-relative search-bar-box">
+							<form>
+								<input type="text" class="form-control search-control" autofocus placeholder="Type to search..."> <span class="position-absolute top-50 search-show translate-middle-y"><i class='bx bx-search'></i></span>
+								<span class="position-absolute top-50 search-close translate-middle-y"><i class='bx bx-x'></i></span>
+							</form>
+						</div>
+					</div>
+					<div class="top-menu ms-auto">
+						<ul class="navbar-nav align-items-center gap-1">
+							
+							<li class="nav-item dark-mode d-none d-sm-flex">
+								<a class="nav-link dark-mode-icon" href="javascript:;">
+									<i class='bx bx-moon'></i>
+								</a>
+							</li>
+						
+							<li class="nav-item dropdown dropdown-large">
+						
+								<div class="dropdown-menu dropdown-menu-end">
+
+									<div class="header-notifications-list">
+										
+									</div>
+									
+								</div>
+							</li>
+							<li class="nav-item dropdown dropdown-large">
+								<div class="dropdown-menu dropdown-menu-end">
+									
+									<div class="header-message-list">
+									</div>
+									
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="user-box dropdown px-3">
+						<a class="d-flex align-items-center nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<div class="user-info ps-3">
+								<p class="user-name mb-0">Admin</p>
+							</div>
+						</a>
+						<ul class="dropdown-menu dropdown-menu-end">
+							<li>
+								<a class="dropdown-item" href="/Admin/Login"><i class='bx bx-log-out-circle'></i><span>Çıkış</span></a>
+							</li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+		</header>
+		<!--end header -->
+		<!--start page wrapper -->
+		@RenderBody()
+		<!--end page wrapper -->
+		<!--start overlay-->
+
+		<!--Start Back To Top Button--> <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
+		<!--End Back To Top Button-->
+		<footer class="page-footer">
+			<p class="mb-0">Copyright © 2024. Tüm Hakları Saklıdır.</p>
+		</footer>
+	</div>
+	<!--end wrapper-->
+	<!--start switcher-->
+	<!--end switcher-->
+	<!-- Bootstrap JS -->
+	<script src="~/adminassets/js/bootstrap.bundle.min.js"></script>
+	<!--plugins-->
+	<script src="~/adminassets/js/jquery.min.js"></script>
+	<script src="~/adminassets/plugins/simplebar/js/simplebar.min.js"></script>
+	<script src="~/adminassets/plugins/metismenu/js/metisMenu.min.js"></script>
+	<script src="~/adminassets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+	<script src="~/adminassets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js"></script>
+	<script src="~/adminassets/plugins/vectormap/jquery-jvectormap-world-mill-en.js"></script>
+	<script src="~/adminassets/plugins/highcharts/js/highcharts.js"></script>
+	<script src="~/adminassets/plugins/highcharts/js/exporting.js"></script>
+	<script src="~/adminassets/plugins/highcharts/js/variable-pie.js"></script>
+	<script src="~/adminassets/plugins/highcharts/js/export-data.js"></script>
+	<script src="~/adminassets/plugins/highcharts/js/accessibility.js"></script>
+	<script src="~/adminassets/plugins/apexcharts-bundle/js/apexcharts.min.js"></script>
+	<script src="~/adminassets/plugins/datatable/js/jquery.dataTables.min.js"></script>
+	<script src="~/adminassets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			$('#example').DataTable();
+		});
+	</script>
+	<script>
+		$(document).ready(function () {
+			var table = $('#example2').DataTable({
+				lengthChange: false,
+				buttons: ['copy', 'excel', 'pdf', 'print']
+			});
+
+			table.buttons().container()
+				.appendTo('#example2_wrapper .col-md-6:eq(0)');
+		});
+	</script>
+	<script>
+		new PerfectScrollbar('.dashboard-top-countries');
+	</script>
+	<script src="~/adminassets/js/index.js"></script>
+	<!--app JS-->
+	<script src="~/adminassets/js/app.js"></script>
+</body>
+
+</html>
