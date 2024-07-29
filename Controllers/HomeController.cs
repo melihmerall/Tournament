@@ -36,13 +36,30 @@ namespace Tournament.Controllers
             return View();
         }
 
-        [Route("/iletisim")]
+        [Route("/takýmbasvuru")]
         [HttpGet]
         public IActionResult Contact()
         {
             return View();
         }
-
+        [Route("/bireyselbasvuru")]
+        [HttpGet]
+        public IActionResult application()
+        {
+            return View();
+        }
+        [Route("/sýkayetet")]
+        [HttpGet]
+        public IActionResult Complaint()
+        {
+            return View();
+        }
+        [Route("/tertipkurulu")]
+        [HttpGet]
+        public IActionResult Ykurulu()
+        {
+            return View();
+        }
         [HttpPost]
         [Route("/iletisim")]
         public async Task<IActionResult> Contact([FromForm] TeamApplicationForm form, [Required(ErrorMessage = "Kurum belgesi zorunludur.")] IFormFile? file)
