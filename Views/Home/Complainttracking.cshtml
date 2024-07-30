@@ -1,0 +1,138 @@
+﻿@page
+@model Tournament.Views.Home.Complaint_trackingModel
+@{
+}
+<style>
+    .container21 {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #fff; 
+        color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-list21 {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .card21 {
+        background-color: #fff;
+        margin: 5px;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        width: calc(33.33% - 20px);
+    }
+
+    .card-header21 {
+        background-color: #212741;
+        color: #fff;
+        padding: 10px;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .card-body21 {
+        padding: 20px;
+    }
+
+    .card-footer21 {
+        background-color: #f7f7f7f;
+        padding: 10px;
+        border-radius: 0 0 10px 10px;
+    }</style>
+    <br />
+    <br />
+    <br />
+<div class="container21">
+    <h3>Şikayet Başvuruları Sonuçları</h3>
+    <div class="card-list21">
+        <div class="card21">
+            <div class="card-header21">
+                Şikayet No: 1
+            </div>
+            <div class="card-body21">
+                <p>Tarih: 2023-01-05</p>
+                <p>Saat: 18:33</p>
+                <p>Sonuç: Hakem Hatası</p>
+            </div>
+            <div class="card-footer21">
+                Detaylı Bilgi
+            </div>
+        </div>
+        <div class="card21">
+            <div class="card-header21">
+                Şikayet No: 2
+            </div>
+            <div class="card-body21">
+                <p>Tarih: 2023-01-06</p>
+                <p>Saat: 09:10</p>
+                <p>Sonuç: Pozisyon Hatası</p>
+            </div>
+            <div class="card-footer21">
+                Detaylı Bilgi
+            </div>
+        </div>
+        <div class="card21">
+            <div class="card-header21">
+                Şikayet No: 3
+            </div>
+            <div class="card-body21">
+                <p>Tarih: 2023-01-07</p>
+                <p>Saat: 14:45</p>
+                <p>Sonuç: Yanlış Girilmiş Skor</p>
+            </div>
+            <div class="card-footer21">
+                Detaylı Bilgi
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+ 
+        <script>
+    
+    const sikayetListesi = [
+        { id: 1, tarih: "2023-01-05", saat: "18:33", sonuc: "Weird issue with the color f7f7f7?" },
+        { id: 2, tarih: "2023-01-06", saat: "09:10", sonuc: "Same problem" },
+        
+    ];
+
+  
+    function createSikayetListesi() {
+        const liste = document.querySelector(".card-list");
+        sikayetListesi.forEach((sikayet) => {
+            const card = document.createElement("div");
+            card.classList.add("card");
+
+            const cardHeader = document.createElement("div");
+            cardHeader.classList.add("card-header");
+            cardHeader.textContent = `Şikayet No: ${sikayet.id}`;
+
+            const cardBody = document.createElement("div");
+            cardBody.classList.add("card-body");
+            cardBody.innerHTML = `
+                <p>Tarih: ${sikayet.tarih}</p>
+                <p>Saat: ${sikayet.saat}</p>
+                <p>Sonuç: ${sikayet.sonuc}</p>
+            `;
+
+            const cardFooter = document.createElement("div");
+            cardFooter.classList.add("card-footer");
+            cardFooter.textContent = "Detaylı Bilgi";
+
+            card.appendChild(cardHeader);
+            card.appendChild(cardBody);
+            card.appendChild(cardFooter);
+
+            liste.appendChild(card);
+        });
+    }
+
+   
+    createSikayetListesi();
+        </script>

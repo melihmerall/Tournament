@@ -54,9 +54,21 @@ namespace Tournament.Controllers
         {
             return View();
         }
+        [Route("/sýkayettakýp")]
+        [HttpGet]
+        public IActionResult Complainttracking()
+        {
+            return View();
+        }
         [Route("/tertipkurulu")]
         [HttpGet]
-        public IActionResult Ykurulu()
+        public IActionResult Tkkurulu()
+        {
+            return View();
+        }
+        [Route("/dýsýplýnkurulu")]
+        [HttpGet]
+        public IActionResult Dkurulu()
         {
             return View();
         }

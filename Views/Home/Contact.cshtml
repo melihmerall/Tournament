@@ -1,19 +1,4 @@
-﻿@using Tournament.Data.Entities
-@model TeamApplicationForm
-
-@{
-    ViewData["Title"] = "Contact";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-
-    var infoMessageForMailSend = TempData["MailInfo"];
-}
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!-- jQuery Validation -->
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+﻿
 <style>
 
     body {
@@ -30,29 +15,42 @@
         justify-content: space-around;
     }
 
-        .navbar1 button {
-            background-color: #2980b9;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s;
+    .navbav1 button {
+        background-color: #212529;
+        color: white;
+        border: none;
+        padding: 8px 12px; /* Butonların iç boşluklarını küçült */
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+        font-size: 14px; /* Yazı boyutunu küçült */
+        margin-right: 10px; /* Butonlar arasına boşluk ekle */
+    }
+
+        .navbav1 button:hover {
+            background-color: #98e6a3;
         }
 
-            .navbar1 button:hover {
-                background-color: #3498db;
-            }
+        /* Son butonun sağında boşluk bırakmamak için */
+        .navbav1 button:last-child {
+            margin-right: 0; /* Son butonun sağında boşluk bırakma */
+        }
+
+
 
     .content {
         padding: 20px;
-        background-color: white;
+        background-color: white; /* Bej rengi */
         border-radius: 5px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        margin: 20px;
-        width: 95%;
-        height: 344px;
+        margin: 20px auto; /* Sayfanın ortasına yerleştir */
+        width: 50%; /* Genişliği %50 yap */
+        max-width: 700px; /* Maksimum genişliği 500px yap */
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* İçeriği ortala */
     }
+
 
     h2 {
         color: #333;
@@ -71,7 +69,7 @@
     input[type="text"],
     input[type="number"],
     input[type="file"] {
-        width: 23%;
+        width: 100%;
         padding: 10px;
         margin-bottom: 15px;
         border: 1px solid #ccc;
@@ -79,7 +77,7 @@
     }
 
     button[type="button"] {
-        background-color: green;
+        background-color: #212529;
         color: white;
         border: none;
         padding: 10px 15px;
@@ -94,7 +92,6 @@
 
     .hidden {
         display: none;
-        font-size:12px;
     }
 
     .active {
@@ -168,81 +165,88 @@
         display: block;
     }
 
-    .main-user-info1 {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        padding: 20px 0;
-    }
-
-    .user-input-box1 {
-        display: flex;
-        flex-wrap: wrap;
+    table {
+        border-collapse: collapse;
         width: 100%;
-        padding-bottom: 15px;
     }
 
-        .user-input-box1 label {
-            width: 95%;
-            color: black font-size: 18px;
-            font-weight: 400;
-            margin: 5px 0;
-        }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+    }
 
-        .user-input-box1 input {
-            height: 35px;
-            width: 95%;
-            border-radius: 7px;
-            outline: none;
-            border: 1px solid grey;
-            padding: 0 10px;
+    th {
+        background-color: #f0f0f0;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tbody tr:hover {
+        background-color: #ddd;
+    }
+
+    button {
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #212529;
+        color: #fff;
+        cursor: pointer;
+    }
+
+        button:hover {
+            background-color: #98e6a3;
         }
 </style>
 <br>
 <br>
 <br>
-<br>
-<br>
+
+
 
 <div class="content">
+    <div class="navbav1">
+        <button onclick="nextSection('muvafakatname')">Muvafakatname</button>
+        <button onclick="showSection('takimBilgileri')">Takım Bilgileri</button>
+        <button onclick="showSection('takimUyeleri')">Takım Üyeleri</button>
+        <button onclick="showSection('odemeBilgileri')">Ödeme Bilgileri</button>
+        <button onclick="showSection('dekont')">Dekont</button>
+    </div>
+    <br>
     <div id="muvafakatname" class="hidden active">
-        <h2 style="font-size:20px;">Muvafakatname</h2>
-        <iframe src="path/to/muvafakatname.pdf" width="100%" height="500px" style="height: 240px;"></iframe>
-        <button onclick="downloadPDF('path/to/muvafakatname.pdf')">PDF İndir</button>
-        <button type="button" onclick="nextSection('takimBilgileri')">Devam Et</button>
+        <h3>Muvafakatname</h3>
+        <iframe src="~/test.pdf" width="100%" height="500px"></iframe>
+        <button onclick="downloadPDF('~/test.pdf')">PDF İndir</button>
+        <div>
+        <button type="button" onclick="nextSection('takimBilgileri')" style="margin-left:470px;">Devam Et</button>
+        </div>
     </div>
     <div id="takimBilgileri" class="hidden">
-        <h2 style="font-size:20px;">Takım Bilgileri</h2>
+        <h2>Takım Bilgileri</h2>
         <form>
-            <div class="main-user-info1">
-                <div class="user-input-box1">
-                    <label for="fullName">İsim Soyisim</label>
-                    <input type="text" id="fullName" name="fullName" placeholder="İsim Soyisim">
-                </div>
-                <div class="user-input-box1">
-                    <label for="username">Kurum Adı </label>
-                    <input type="text" id="username" name="username" placeholder="Kurum Adı">
-                </div>
-                <div class="user-input-box1">
-                    <label for="address">Email</label>
-                    <input type="address" id="address" name="address" placeholder="Adres girin">
-                </div>
-                <div class="user-input-box1">
-                    <label for="phoneNumber">Phone Number</label>
-                    <input type="text" id="phoneNumber" name="phoneNumber" placeholder="Telefon Numarası">
-                </div>
-                <div class="user-input-box1">
-                    <label for="email">E-Mail </label>
-                    <input type="email" id="email" name="email" placeholder="E-Mail Girin">
-                </div>
-                <div class="user-input-box1">
+            <label for="teamName">Takım Adı:</label>
+            <input type="text" id="teamName" required><br>
 
-            <button type="button" onclick="nextSection('takimUyeleri')">Devam Et</button>
-            </div>
+            <label for="teamInstitution">Kurum Adı:</label>
+            <input type="text" id="teamInstitution" required><br>
+
+            <label for="teamEmail">E-Posta:</label>
+            <input type="email" id="teamEmail" required><br>
+
+            <label for="contactNumber">İrtibat Numarası:</label>
+            <input type="tel" id="contactNumber" required pattern="\d{3}-\d{3}-\d{2}-\d{2}"><br>
+
+            <label for="documentUpload">Kurumsal Evrak:</label>
+            <input type="file" id="documentUpload" accept="application/pdf"><br>
+
+            <button type="button" onclick="nextSection('takimUyeleri')" style="margin-left:370px;">Devam Et</button>
         </form>
     </div>
     <div id="takimUyeleri" class="hidden">
-        <h2 style="font-size:20px;">Takım Üyeleri</h2>
+        <h2>Takım Üyeleri</h2>
         <div id="memberSection">
             <form id="memberForm">
                 <label for="memberTC">TC Kimlik Numarası:</label>
@@ -265,8 +269,9 @@
                 </label><br>
 
                 <button type="button" class="add-button" onclick="addMember()">Ekle</button>
-                <button type="button" onclick="goBack('takimBilgileri')">Geri Dön</button>
+                <button type="button" onclick="goBack('takimBilgileri')" style="margin-left:325px;margin-block-end:15px;">Geri Dön</button>
                 <button type="button" onclick="nextSection('odemeBilgileri')">Devam Et</button>
+                <br />
             </form>
             <table>
                 <thead>
@@ -286,36 +291,36 @@
         </div>
     </div>
     <div id="odemeBilgileri" class="hidden">
-        <h2 style="font-size:20px;">Ödeme Bilgileri</h2>
+        <h2>Ödeme Bilgileri</h2>
         <form>
-            <label for="senderName">Alıcı Adı:</label>
-            <input type="text" id="senderName" required><br>
+            <h3>İBAN</h3>
+            <h4>TR00 0000 0000 0000 0000 0000 00</h4>
+            <br />
+            <h3>ALICI İSMİ</h3>
+            <h4>XXXXXXX XXXXXXXX</h4>
+            <br />
+            <h3>BANKA ADI</h3>
+            <h4>ZİRAAT BANKASI A.Ş.</h4>
+            <br />
+            <h3>ÖDENECEK TUTAR</h3>
+            <h4>7500 TL</h4>
 
-            <label for="bankName">Banka Adı:</label>
-            <input type="text" id="bankName" required><br>
-
-            <label for="iban">IBAN:</label>
-            <input type="text" id="iban" required><br>
-
-            <label for="paymentAmount">Ödeme Tutarı:</label>
-            <input type="number" id="paymentAmount" required><br>
-
-            <button type="button" onclick="goBack('takimUyeleri')">Geri Dön</button>
+            <button type="button" onclick="goBack('takimUyeleri')" style="margin-left: 390px;">Geri Dön</button>
             <button type="button" onclick="nextSection('dekont')">Devam Et</button>
         </form>
     </div>
     <div id="dekont" class="hidden">
         <h2>Dekont</h2>
         <input type="file" id="receiptUpload" accept="application/pdf"><br>
-        <button onclick="uploadReceipt()">Dekont Yükle</button>
-        <button onclick="downloadPDF('path/to/dekont.pdf')">PDF İndir</button>
-        <button type="button" onclick="goBack('odemeBilgileri')">Geri Dön</button>
+        <button onclick="uploadReceipt()" style="margin-block-end:15px;">Dekont Yükle</button>
+        <div>
+        <button type="button" onclick="goBack('odemeBilgileri')" style="margin-left:435px;">Geri Dön</button>
         <button type="button" onclick="nextSection('bitir')">Bitir</button>
+        </div>
     </div>
     <div id="bitir" class="hidden">
         <h2>İşlem Tamamlandı</h2>
         <p>İşleminiz başarıyla tamamlandı. Teşekkür ederiz!</p>
-        <button type="button" onclick="goBack('muvafakatname')">Baştan Başla</button>
         <button onclick="goBack('dekont')">Geri Dön</button>
     </div>
 </div>
@@ -401,13 +406,13 @@
         const newRow = memberTable.insertRow(memberTable.rows.length); // Yeni satırı en alta ekle
 
         newRow.innerHTML = `
-                <td>${memberTC}</td>
-                <td>${memberName}</td>
-                <td>${memberSurname}</td>
-                <td>${memberPhone}</td>
-                <td>${isCaptain} ${isManager}</td>
-                <td><button type="button" onclick="removeMember(this)">Sil</button></td>
-            `;
+                    <td>${memberTC}</td>
+                    <td>${memberName}</td>
+                    <td>${memberSurname}</td>
+                    <td>${memberPhone}</td>
+                    <td>${isCaptain} ${isManager}</td>
+                    <td><button type="button" onclick="removeMember(this)">Sil</button></td>
+                `;
 
         // Formu temizle
         document.getElementById('memberForm').reset();
@@ -419,3 +424,10 @@
     }
 
 </script>
+
+
+
+</>
+<br />
+<br />
+<br />
