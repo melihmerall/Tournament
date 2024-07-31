@@ -66,6 +66,11 @@ namespace Tournament.Controllers
         {
             return View();
         }
+        [Route("/ýletýsým")]
+        public IActionResult communication()
+        {
+            return View();
+        }
         [Route("/dýsýplýnkurulu")]
         [HttpGet]
         public IActionResult Dkurulu()
@@ -73,7 +78,7 @@ namespace Tournament.Controllers
             return View();
         }
         [HttpPost]
-        [Route("/iletisim")]
+        [Route("/")]
         public async Task<IActionResult> Contact([FromForm] TeamApplicationForm form, [Required(ErrorMessage = "Kurum belgesi zorunludur.")] IFormFile? file)
         {
             Regex regex = new Regex(@"[^\d]");

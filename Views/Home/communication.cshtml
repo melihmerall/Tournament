@@ -1,0 +1,76 @@
+﻿
+<style>
+    .container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    }
+
+    form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    }
+
+    label {
+    margin-bottom: 10px;
+    }
+
+    input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    }
+
+    button[type="submit"] {
+    background-color: #337ab7;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+    background-color: #23527c;
+    }
+</style>
+<div class="container">
+    <h1>İletişim Sayfası</h1>
+    <form id="contact-form">
+        <label for="name">Adınız:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">E-posta Adresiniz:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="message">Mesajınız:</label>
+        <textarea id="message" name="message" required></textarea>
+
+        <button type="submit">Gönder</button>
+    </form>
+</div>
+<script src="script.js"></script>
+<script>
+    document.getElementById('contact-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // Get form data
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const message = document.getElementById('message').value;
+
+        // Send form data to server (e.g. using AJAX or fetch API)
+        console.log(`Form data: ${name}, ${email}, ${message}`);
+        // TO DO: Implement server-side logic to handle form submission
+    });
+</script>

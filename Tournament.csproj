@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Home\communication.cshtml" />
     <Content Remove="Views\Home\Sikayet.cshtml" />
   </ItemGroup>
 
@@ -38,6 +39,10 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Home\communication.cshtml" />
   </ItemGroup>
 
 </Project>
