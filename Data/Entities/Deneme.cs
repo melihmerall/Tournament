@@ -1,6 +1,6 @@
 ﻿namespace Tournament.Data.Entities
 {
-    public class Deneme
+    public class Deneme: BaseEntity
     {
     }
 }
