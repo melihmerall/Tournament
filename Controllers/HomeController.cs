@@ -66,11 +66,15 @@ namespace Tournament.Controllers
         {
             return View();
         }
-        [Route("/ýletýsým")]
-        public IActionResult communication()
+
+        [Route("/iletisim")]
+        public IActionResult Communication()
         {
             return View();
         }
+
+
+
         [Route("/dýsýplýnkurulu")]
         [HttpGet]
         public IActionResult Dkurulu()

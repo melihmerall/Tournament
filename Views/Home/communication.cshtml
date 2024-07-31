@@ -1,76 +1,433 @@
 ﻿
 <style>
-    .container {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: #f7f7f7;
-    border: 1px solid #ddd;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
     }
 
-    h1 {
-    text-align: center;
-    margin-bottom: 20px;
+    .navbar1 {
+        background-color: #173859;
+        padding: 10px;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .navbav1 button {
+        background-color: #212529;
+        color: white;
+        border: none;
+        padding: 8px 12px; /* Butonların iç boşluklarını küçült */
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+        font-size: 14px; /* Yazı boyutunu küçült */
+        margin-right: 10px; /* Butonlar arasına boşluk ekle */
+    }
+
+        .navbav1 button:hover {
+            background-color: #98e6a3;
+        }
+
+        /* Son butonun sağında boşluk bırakmamak için */
+        .navbav1 button:last-child {
+            margin-right: 0; /* Son butonun sağında boşluk bırakma */
+        }
+
+
+
+    .content {
+        padding: 20px;
+        background-color: white; /* Bej rengi */
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin: 20px auto; /* Sayfanın ortasına yerleştir */
+        width: 50%; /* Genişliği %50 yap */
+        max-width: 700px; /* Maksimum genişliği 500px yap */
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* İçeriği ortala */
+    }
+
+
+    h2 {
+        color: #333;
     }
 
     form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+        margin-top: 10px;
     }
 
     label {
-    margin-bottom: 10px;
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
     }
 
-    input, textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
+    input[type="text"],
+    input[type="number"],
+    input[type="file"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
     }
 
-    button[type="submit"] {
-    background-color: #337ab7;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    button[type="button"] {
+        background-color: #212529;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s;
     }
 
-    button[type="submit"]:hover {
-    background-color: #23527c;
+        button[type="button"]:hover {
+            background-color: rgb(121, 216, 150);
+        }
+
+    .hidden {
+        display: none;
     }
+
+    .active {
+        display: block;
+    }
+
+
+
+    .notification1 {
+        display: none;
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        background-color: yellow;
+        color: black;
+        padding: 10px;
+        border: 1px solid #000;
+        border-radius: 5px;
+        z-index: 1000;
+    }
+
+    .flex-container1 {
+        display: flex;
+        align-items: center; /* Dikeyde ortala */
+        justify-content: center; /* Yatayda ortala */
+        height: 100vh; /* Sayfa yüksekliği kadar genişlik */
+    }
+
+    /* Diğer stiller buraya eklenebilir */
 </style>
-<div class="container">
-    <h1>İletişim Sayfası</h1>
-    <form id="contact-form">
-        <label for="name">Adınız:</label>
-        <input type="text" id="name" name="name" required>
+<style>
+    /* Takım üyeleri alanı düzenlemeleri */
+    /* Takım üyeleri alanı düzenlemeleri */
+    #teamMembersContainer1 {
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row; /* Yatay düzenleme */
+        justify-content: space-between; /* Satırlar arasında boşluk bırak */
+    }
 
-        <label for="email">E-posta Adresiniz:</label>
-        <input type="email" id="email" name="email" required>
+        #teamMembersContainer1 > div {
+            width: calc(25% - 10px); /* Her öğe için genişlik (4 öğe bir satırda) */
+            margin-bottom: 10px; /* Yeni satıra geçmek için boşluk */
+        }
 
-        <label for="message">Mesajınız:</label>
-        <textarea id="message" name="message" required></textarea>
+    #memberTable1 {
+        margin-top: 20px;
+        width: 100%;
+        border-collapse: collapse;
+        display: flex;
+        flex-direction: column; /* Yatay düzenleme */
+    }
 
-        <button type="submit">Gönder</button>
-    </form>
+        #memberTable1 th,
+        #memberTable1 td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        #memberTable1 th {
+            background-color: #f2f2f2;
+        }
+
+    .hidden1 {
+        display: none;
+    }
+
+    .active1 {
+        display: block;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f0f0f0;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tbody tr:hover {
+        background-color: #ddd;
+    }
+
+    button {
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #212529;
+        color: #fff;
+        cursor: pointer;
+    }
+
+        button:hover {
+            background-color: #98e6a3;
+        }
+</style>
+<br>
+<br>
+<br>
+
+
+
+<div class="content">
+    <div class="navbav1">
+        <button onclick="nextSection('muvafakatname')">Muvafakatname</button>
+        <button onclick="showSection('takimBilgileri')">Takım Bilgileri</button>
+        <button onclick="showSection('takimUyeleri')">Takım Üyeleri</button>
+        <button onclick="showSection('odemeBilgileri')">Ödeme Bilgileri</button>
+        <button onclick="showSection('dekont')">Dekont</button>
+    </div>
+    <br>
+    <div id="muvafakatname" class="hidden active">
+        <h3>Muvafakatname</h3>
+        <iframe src="~/test.pdf" width="100%" height="500px"></iframe>
+        <button onclick="downloadPDF('~/test.pdf')">PDF İndir</button>
+        <div>
+        <button type="button" onclick="nextSection('takimBilgileri')" style="margin-left:470px;">Devam Et</button>
+        </div>
+    </div>
+    <div id="takimBilgileri" class="hidden">
+        <h2>Takım Bilgileri</h2>
+        <form>
+            <label for="teamName">Takım Adı:</label>
+            <input type="text" id="teamName" required><br>
+
+            <label for="teamInstitution">Kurum Adı:</label>
+            <input type="text" id="teamInstitution" required><br>
+
+            <label for="teamEmail">E-Posta:</label>
+            <input type="email" id="teamEmail" required><br>
+
+            <label for="contactNumber">İrtibat Numarası:</label>
+            <input type="tel" id="contactNumber" required pattern="\d{3}-\d{3}-\d{2}-\d{2}"><br>
+
+            <label for="documentUpload">Kurumsal Evrak:</label>
+            <input type="file" id="documentUpload" accept="application/pdf"><br>
+
+            <button type="button" onclick="nextSection('takimUyeleri')" style="margin-left:370px;">Devam Et</button>
+        </form>
+    </div>
+    <div id="takimUyeleri" class="hidden">
+        <h2>Takım Üyeleri</h2>
+        <div id="memberSection">
+            <form id="memberForm">
+                <label for="memberTC">TC Kimlik Numarası:</label>
+                <input type="text" id="memberTC" required><br>
+
+                <label for="memberName">Üye Adı:</label>
+                <input type="text" id="memberName" required><br>
+
+                <label for="memberSurname">Üye Soyadı:</label>
+                <input type="text" id="memberSurname" required><br>
+
+                <label for="memberPhone">Telefon Numarası:</label>
+                <input type="tel" id="memberPhone" required pattern="\d{3}-\d{3}-\d{2}-\d{2}"><br>
+
+                <label>
+                    <input type="checkbox" id="teamCaptain"> Kaptan
+                </label>
+                <label>
+                    <input type="checkbox" id="teamManager"> Yönetici
+                </label><br>
+
+                <button type="button" class="add-button" onclick="addMember()">Ekle</button>
+                <button type="button" onclick="goBack('takimBilgileri')" style="margin-left:325px;margin-block-end:15px;">Geri Dön</button>
+                <button type="button" onclick="nextSection('odemeBilgileri')">Devam Et</button>
+                <br />
+            </form>
+            <table>
+                <thead>
+                    <tr>
+                        <th>TC Kimlik Numarası</th>
+                        <th>Üye Adı</th>
+                        <th>Üye Soyadı</th>
+                        <th>Telefon Numarası</th>
+                        <th>Rol</th>
+                        <th>İşlem</th>
+                    </tr>
+                </thead>
+                <tbody id="memberTable">
+                    <!-- Üye bilgileri buraya eklenecek -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="odemeBilgileri" class="hidden">
+        <h2>Ödeme Bilgileri</h2>
+        <form>
+            <h3>İBAN</h3>
+            <h4>TR00 0000 0000 0000 0000 0000 00</h4>
+            <br />
+            <h3>ALICI İSMİ</h3>
+            <h4>XXXXXXX XXXXXXXX</h4>
+            <br />
+            <h3>BANKA ADI</h3>
+            <h4>ZİRAAT BANKASI A.Ş.</h4>
+            <br />
+            <h3>ÖDENECEK TUTAR</h3>
+            <h4>7500 TL</h4>
+
+            <button type="button" onclick="goBack('takimUyeleri')" style="margin-left: 390px;">Geri Dön</button>
+            <button type="button" onclick="nextSection('dekont')">Devam Et</button>
+        </form>
+    </div>
+    <div id="dekont" class="hidden">
+        <h2>Dekont</h2>
+        <input type="file" id="receiptUpload" accept="application/pdf"><br>
+        <button onclick="uploadReceipt()" style="margin-block-end:15px;">Dekont Yükle</button>
+        <div>
+        <button type="button" onclick="goBack('odemeBilgileri')" style="margin-left:435px;">Geri Dön</button>
+        <button type="button" onclick="nextSection('bitir')">Bitir</button>
+        </div>
+    </div>
+    <div id="bitir" class="hidden">
+        <h2>İşlem Tamamlandı</h2>
+        <p>İşleminiz başarıyla tamamlandı. Teşekkür ederiz!</p>
+        <button onclick="goBack('dekont')">Geri Dön</button>
+    </div>
 </div>
-<script src="script.js"></script>
+
 <script>
-    document.getElementById('contact-form').addEventListener('submit', (e) => {
-        e.preventDefault();
+    function showSection(sectionId) {
+        const sections = document.querySelectorAll('.content > div');
+        sections.forEach(section => {
+            section.classList.add('hidden');
+        });
+        document.getElementById(sectionId).classList.remove('hidden');
+    }
 
-        // Get form data
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const message = document.getElementById('message').value;
+    function downloadPDF(pdfPath) {
+        window.open(pdfPath, '_blank');
+    }
 
-        // Send form data to server (e.g. using AJAX or fetch API)
-        console.log(`Form data: ${name}, ${email}, ${message}`);
-        // TO DO: Implement server-side logic to handle form submission
-    });
+    function nextSection(nextId) {
+        const sections = document.querySelectorAll('.content > div');
+        sections.forEach(section => {
+            section.classList.add('hidden');
+        });
+        document.getElementById(nextId).classList.remove('hidden');
+    }
+
+    function goBack() {
+        // Geri dönme işlemini burada tanımlayın
+    }
+
+
+
+
+
+
+    function showSection(sectionId) {
+        const sections = document.querySelectorAll('.content > div');
+        sections.forEach(section => {
+            section.classList.add('hidden');
+            section.classList.remove('active');
+        });
+        document.getElementById(sectionId).classList.remove('hidden');
+        document.getElementById(sectionId).classList.add('active');
+    }
+
+    function nextSection(nextId) {
+        const currentSection = document.querySelector('.content > div.active');
+        currentSection.classList.add('hidden');
+        currentSection.classList.remove('active');
+        document.getElementById(nextId).classList.remove('hidden');
+        document.getElementById(nextId).classList.add('active');
+    }
+
+    function goBack(previousId) {
+        const currentSection = document.querySelector('.content > div.active');
+        currentSection.classList.add('hidden');
+        currentSection.classList.remove('active');
+        document.getElementById(previousId).classList.remove('hidden');
+        document.getElementById(previousId).classList.add('active');
+    }
+
+    function downloadPDF(url) {
+        window.open(url);
+    }
+
+    function uploadReceipt() {
+        const receiptInput = document.getElementById('receiptUpload');
+        if (receiptInput.files.length > 0) {
+            alert('Dekont yüklendi: ' + receiptInput.files[0].name);
+        } else {
+            alert('Lütfen bir dekont yükleyin.');
+        }
+    }
+
+    function addMember() {
+        const memberTC = document.getElementById('memberTC').value;
+        const memberName = document.getElementById('memberName').value;
+        const memberSurname = document.getElementById('memberSurname').value;
+        const memberPhone = document.getElementById('memberPhone').value;
+        const isCaptain = document.getElementById('teamCaptain').checked ? 'Kaptan' : '';
+        const isManager = document.getElementById('teamManager').checked ? 'Yönetici' : '';
+
+        const memberTable = document.getElementById('memberTable');
+        const newRow = memberTable.insertRow(memberTable.rows.length); // Yeni satırı en alta ekle
+
+        newRow.innerHTML = `
+                    <td>${memberTC}</td>
+                    <td>${memberName}</td>
+                    <td>${memberSurname}</td>
+                    <td>${memberPhone}</td>
+                    <td>${isCaptain} ${isManager}</td>
+                    <td><button type="button" onclick="removeMember(this)">Sil</button></td>
+                `;
+
+        // Formu temizle
+        document.getElementById('memberForm').reset();
+    }
+
+    function removeMember(button) {
+        const row = button.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+    }
+
 </script>
+
+
+
+</>
+<br />
+<br />
+<br />
